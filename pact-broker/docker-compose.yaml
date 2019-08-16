@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    
+  pact:
+    image: dius/pact-broker
+    environment: 
+      PACT_BROKER_DATABASE_USERNAME: postgres
+      PACT_BROKER_DATABASE_PASSWORD: example
+      PACT_BROKER_DATABASE_HOST: db
+      PACT_BROKER_DATABASE_NAME: postgres
+    ports:
+      - 8080:80
+    links: 
+      - db
